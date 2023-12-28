@@ -1,28 +1,27 @@
-'use client';
+'use client'
 
-import React, {use, useEffect, useState} from 'react';
-import ListItem from './ListItem';
-import {ListingType, useListingsData} from '../useListingsData';
-import {Filter} from './Filters';
+import React, { use, useEffect, useState } from 'react'
+import ListItem from './ListItem'
+import { ListingType, useListingsData } from '../hooks/useListingsData'
+import { Filter } from './Filters'
 
 const List = () => {
-  const [filteredListings, setFilteredListings] = useState<ListingType[]>([]);
+  const [filteredListings, setFilteredListings] = useState<ListingType[]>([])
 
-  const {loading, listings} = useListingsData();
+  const { loading, listings } = useListingsData()
 
   useEffect(() => {
-    setFilteredListings(listings);
-  }, [listings]);
+    setFilteredListings(listings)
+  }, [listings])
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   const handleFilterChange = (filteredListings: ListingType[]) => {
-    setFilteredListings(filteredListings);
-  };
+    setFilteredListings(filteredListings)
+  }
 
-  console.log({filteredListings});
   return (
     <div className="container mx-auto my-96">
       <Filter listings={listings} onFilterChange={handleFilterChange} key={1} />
@@ -32,7 +31,7 @@ const List = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default List;
+export default List

@@ -1,10 +1,10 @@
-'use client';
-import {ListingType, useListingsData} from '@/app/useListingsData';
-import Image from 'next/image';
-import {useParams} from 'next/navigation';
-import React, {useState, useEffect} from 'react';
+'use client'
+import { ListingType, useListingsData } from '@/app/hooks/useListingsData'
+import Image from 'next/image'
+import { useParams } from 'next/navigation'
+import React, { useState, useEffect } from 'react'
 
-const ListingCard = ({listing}: {listing: ListingType}) => {
+const ListingCard = ({ listing }: { listing: ListingType }) => {
   return (
     <div className="max-w-lg p-8 bg-white shadow-md rounded-md border">
       <div className="flex justify-between mb-4">
@@ -45,8 +45,8 @@ const ListingCard = ({listing}: {listing: ListingType}) => {
       {/* Listing Description */}
       <div className="text-sm text-gray-600 mt-4">{listing.Description}</div>
     </div>
-  );
-};
+  )
+}
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -54,91 +54,91 @@ const ContactForm = () => {
     email: '',
     phoneNumber: '',
     comments: '',
-  });
+  })
 
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('')
 
   const [validationMessages, setValidationMessages] = useState({
     fullName: '',
     email: '',
     phoneNumber: '',
     comments: '',
-  });
+  })
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormData({...formData, [name]: value});
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
 
-    setValidationMessages({...validationMessages, [name]: ''});
-  };
+    setValidationMessages({ ...validationMessages, [name]: '' })
+  }
 
   const validateForm = () => {
-    let isValid = true;
+    let isValid = true
     const newValidationMessages: {
-      fullName?: string;
-      email?: string;
-      phoneNumber?: string;
-      comments?: string;
-    } = {};
+      fullName?: string
+      email?: string
+      phoneNumber?: string
+      comments?: string
+    } = {}
 
     if (formData.fullName.trim() === '') {
-      newValidationMessages.fullName = 'Full Name is required';
-      isValid = false;
+      newValidationMessages.fullName = 'Full Name is required'
+      isValid = false
     }
 
     if (formData.email.trim() === '') {
-      newValidationMessages.email = 'Email is required';
-      isValid = false;
+      newValidationMessages.email = 'Email is required'
+      isValid = false
     } else if (!isValidEmail(formData.email)) {
-      newValidationMessages.email = 'Invalid email format';
-      isValid = false;
+      newValidationMessages.email = 'Invalid email format'
+      isValid = false
     }
 
     if (formData.phoneNumber.trim() === '') {
-      newValidationMessages.phoneNumber = 'Phone Number is required';
-      isValid = false;
+      newValidationMessages.phoneNumber = 'Phone Number is required'
+      isValid = false
     } else if (!isValidPhoneNumber(formData.phoneNumber)) {
-      newValidationMessages.phoneNumber = 'Invalid phone number format';
-      isValid = false;
+      newValidationMessages.phoneNumber = 'Invalid phone number format'
+      isValid = false
     }
 
     if (formData.comments.trim() === '') {
-      newValidationMessages.comments = 'Comments are required';
-      isValid = false;
+      newValidationMessages.comments = 'Comments are required'
+      isValid = false
     }
 
-    setValidationMessages(newValidationMessages);
+    setValidationMessages(newValidationMessages)
 
     if (isValid) {
-      setSuccessMessage('Form submitted successfully');
+      setSuccessMessage('Form submitted successfully')
     }
 
-    return isValid;
-  };
+    return isValid
+  }
 
   const isValidEmail = (email: string) => {
     // Simple email validation. You can replace this with a more robust solution if needed.
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
 
   const isValidPhoneNumber = (phoneNumber: string) => {
-    const phoneRegex = /^(\d{8}|\d{10}|\d{11}|\d{12})$/;
+    const phoneRegex = /^(\d{8}|\d{10}|\d{11}|\d{12})$/
 
-    return phoneRegex.test(phoneNumber);
-  };
+    return phoneRegex.test(phoneNumber)
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const isValid = validateForm();
+    const isValid = validateForm()
 
-    console.log({isValid});
+    console.log({ isValid })
 
     if (isValid) {
-      console.log('Form Submitted:', formData);
+      console.log('Form Submitted:', formData)
     }
-  };
+  }
 
   return (
     <div className="max-w-md p-8 bg-gray-100 rounded-md">
@@ -249,22 +249,22 @@ const ContactForm = () => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
 const ListingDetails = () => {
-  const {listings, loading} = useListingsData();
+  const { listings, loading } = useListingsData()
 
-  const listingId = useParams().id;
+  const listingId = useParams().id
 
-  const listing = listings.find((listing) => listing.Id === +listingId);
+  const listing = listings.find((listing) => listing.Id === +listingId)
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   if (!listing) {
-    return <div>Listing not found</div>;
+    return <div>Listing not found</div>
   }
 
   return (
@@ -284,7 +284,7 @@ const ListingDetails = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ListingDetails;
+export default ListingDetails

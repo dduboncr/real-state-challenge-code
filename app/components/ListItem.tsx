@@ -1,9 +1,15 @@
-import React from 'react';
-import Link from 'next/link';
-import {ListingType} from '../useListingsData';
-import Image from 'next/image';
+import React from 'react'
+import Link from 'next/link'
+import { ListingType } from '../hooks/useListingsData'
+import Image from 'next/image'
 
-const ListItem = ({listing}: {listing: ListingType}) => {
+const numberFormatter = new Intl.NumberFormat('en-US', {
+  style: 'decimal',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+})
+
+const ListItem = ({ listing }: { listing: ListingType }) => {
   return (
     <div className="border p-4 mb-4 rounded-md flex flex-col">
       <div className="relative mb-2">
@@ -22,7 +28,7 @@ const ListItem = ({listing}: {listing: ListingType}) => {
           {listing.Bedrooms} beds | {listing.Bathrooms} baths
         </p>
         <p className="mt-2 text-gray-500">{listing.Parking} parking</p>
-        <p className="mt-2">${listing['Sale Price']}</p>
+        <p className="mt-2">${numberFormatter.format(listing['Sale Price'])}</p>
       </div>
       <Link href={`/listings/${listing.Id}`}>
         <div className="bg-blue-500 text-white p-2 rounded-md mt-2 cursor-pointer">
@@ -30,7 +36,7 @@ const ListItem = ({listing}: {listing: ListingType}) => {
         </div>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default ListItem;
+export default ListItem

@@ -1,27 +1,27 @@
 // components/FilterComponent.tsx
 
-import React, {useState} from 'react';
-import {ListingType} from '../useListingsData';
+import React, { useState } from 'react'
+import { ListingType } from '../hooks/useListingsData'
 
 type FilterComponentProps = {
-  listings: ListingType[];
-  onFilterChange: (filteredListings: ListingType[]) => void;
-};
+  listings: ListingType[]
+  onFilterChange: (filteredListings: ListingType[]) => void
+}
 
 const numberFormatter = new Intl.NumberFormat('en-US', {
   style: 'decimal',
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
-});
+})
 
 export const Filter: React.FC<FilterComponentProps> = ({
   listings,
   onFilterChange,
 }) => {
-  const [bedrooms, setBedrooms] = useState<number | ''>('');
-  const [maxPrice, setMaxPrice] = useState<number | ''>('');
-  const [bathrooms, setBathrooms] = useState<number | ''>('');
-  const [parking, setParking] = useState<number | ''>('');
+  const [bedrooms, setBedrooms] = useState<number | ''>('')
+  const [maxPrice, setMaxPrice] = useState<number | ''>(10000)
+  const [bathrooms, setBathrooms] = useState<number | ''>('')
+  const [parking, setParking] = useState<number | ''>('')
 
   const handleFilter = () => {
     const filteredListings = listings.filter(
@@ -30,10 +30,10 @@ export const Filter: React.FC<FilterComponentProps> = ({
         (bedrooms === '' || listing.Bedrooms <= Number(bedrooms)) &&
         (bathrooms === '' || listing.Bathrooms <= Number(bathrooms)) &&
         (parking === '' || listing.Parking <= Number(parking))
-    );
+    )
 
-    onFilterChange(filteredListings);
-  };
+    onFilterChange(filteredListings)
+  }
 
   return (
     <div className="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 gap-4">
@@ -45,7 +45,7 @@ export const Filter: React.FC<FilterComponentProps> = ({
           type="number"
           id="bathrooms"
           value={bathrooms}
-          onChange={(e) => setBathrooms(e.target.value)}
+          onChange={(e) => setBathrooms(+e.target.value)}
           className="border rounded-md p-2"
         />
       </div>
@@ -58,7 +58,7 @@ export const Filter: React.FC<FilterComponentProps> = ({
           type="number"
           id="bedrooms"
           value={bedrooms}
-          onChange={(e) => setBedrooms(e.target.value)}
+          onChange={(e) => setBedrooms(+e.target.value)}
           className="border rounded-md p-2"
         />
       </div>
@@ -71,7 +71,7 @@ export const Filter: React.FC<FilterComponentProps> = ({
           type="number"
           id="parking"
           value={parking}
-          onChange={(e) => setParking(e.target.value)}
+          onChange={(e) => setParking(+e.target.value)}
           className="border rounded-md p-2"
         />
       </div>
@@ -88,7 +88,7 @@ export const Filter: React.FC<FilterComponentProps> = ({
           max="1000000"
           step="1000"
           value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
+          onChange={(e) => setMaxPrice(+e.target.value)}
           className="border rounded-md p-2"
         />
       </div>
@@ -102,5 +102,5 @@ export const Filter: React.FC<FilterComponentProps> = ({
         </button>
       </div>
     </div>
-  );
-};
+  )
+}

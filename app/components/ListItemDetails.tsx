@@ -1,7 +1,7 @@
 // components/ListingDetailsView.tsx
 
 import React from 'react';
-import { ListingType } from '../useListingsData';
+import { ListingType } from '../hooks/useListingsData';
 
 type ListingDetailsViewProps = {
   listing: ListingType;
