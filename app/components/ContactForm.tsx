@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, FormEventHandler, useState } from 'react'
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +17,9 @@ export const ContactForm = () => {
     comments: '',
   })
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
 
@@ -59,7 +61,7 @@ export const ContactForm = () => {
       isValid = false
     }
 
-    setValidationMessages(newValidationMessages)
+    setValidationMessages(newValidationMessages as any)
 
     if (isValid) {
       setSuccessMessage('Form submitted successfully')
@@ -80,7 +82,7 @@ export const ContactForm = () => {
     return phoneRegex.test(phoneNumber)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const isValid = validateForm()
@@ -181,7 +183,7 @@ export const ContactForm = () => {
             name="comments"
             value={formData.comments}
             onChange={handleChange}
-            rows="4"
+            rows={4}
             className={`mt-1 p-2 w-full border rounded-md ${
               validationMessages.comments ? 'border-red-500' : ''
             }`}

@@ -6,7 +6,12 @@ import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
 
-const storedListings = JSON.parse(localStorage.getItem('savedListings')) || []
+let storedListings: ListingType[] = []
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+
+  storedListings = JSON.parse(localStorage.getItem('savedListings') || '') || []
+}
 
 const ListingCard = ({ listing }: { listing: ListingType }) => {
   return (
@@ -17,8 +22,12 @@ const ListingCard = ({ listing }: { listing: ListingType }) => {
       </div>
 
       <div className="flex justify-between mb-2">
-        <div className="text-sm text-gray-500">{listing.Location}</div>
-        <div className="text-sm text-gray-500">{listing.DateListed}</div>
+        <div className="text-sm text-gray-500">
+          Location: {listing.Location}
+        </div>
+        <div className="text-sm text-gray-500">
+          Date Listed: {listing.DateListed}
+        </div>
       </div>
       <Image
         width={100}
@@ -84,7 +93,7 @@ const ListingDetails = () => {
   useEffect(() => {
     try {
       const storedListings =
-        JSON.parse(localStorage.getItem('savedListings')) || []
+        JSON.parse(localStorage.getItem('savedListings') || '') || []
       setSavedListings(storedListings)
     } catch (error) {}
   }, [])
